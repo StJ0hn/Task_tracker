@@ -2,12 +2,16 @@ import typer
 import json
 from pathlib import Path
 
-caminho_do_arquivo = "task.json"
+caminho_do_arquivo = "/home/john/Trabalho/Storm/Projetos Back-end/Rastreador de tarefas/task.json"
 #função para adicionar tarefas:
 def adicao_de_tarefas(tarefa: str):
     if Path(caminho_do_arquivo).exists():
-        with open(caminho_do_arquivo, "r") as f:
-            tarefas = json.load(f)
+        try:
+            with open(caminho_do_arquivo, "r") as f:
+                tarefas = json.load(f)
+        except json.JSONDecodeError:
+            print("Erro: o arquivo JSON está corrompido. Criando um novo arquivo.")
+            tarefas = []
     else:
         tarefas = []
 
