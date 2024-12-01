@@ -2,16 +2,18 @@ import typer
 import json
 from pathlib import Path
 
+app = typer.Typer() 
+
 caminho_do_arquivo = "/home/john/Trabalho/Storm/Projetos Back-end/Rastreador de tarefas/task.json"
-#função para adicionar tarefas:
-def adicao_de_tarefas(tarefa: str):
+
+#FUNÇÃO PARA ADICIONAR TAREFAS:
+def adicionar(tarefa: str):
     if Path(caminho_do_arquivo).exists():
         try:
             with open(caminho_do_arquivo, "r") as f:
                 tarefas = json.load(f)
         except json.JSONDecodeError:
             print("Erro: o arquivo JSON está corrompido. Criando um novo arquivo.")
-            tarefas = []
     else:
         tarefas = []
 
@@ -24,6 +26,19 @@ def adicao_de_tarefas(tarefa: str):
     
     print(f"A tarefa '{tarefa}' foi adicionada com sucesso!")
 
-#Criando a interface de linha de comando
-if __name__ == "__main__":
-    typer.run(adicao_de_tarefas)
+
+
+
+#Função para listar as tarefas:
+def listar():
+    if Path(caminho_do_arquivo).exists():
+        with open(caminho_do_arquivo, "r") as f:
+            tarefas = json.load(f)
+            print("Tarefas: ")
+            for i, tarefa in enumerate(tarefas,1):
+                print(f"{i}. {tarefa}")
+    else:
+        print("Nenhuma tarefa encontrada")
+
+
+
