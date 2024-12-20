@@ -1,42 +1,14 @@
 [
     {
-        "tarefa": "Comprar leite",
+        "tarefa": "Beber",
         "status": "done"
     },
     {
-        "tarefa": "Ir ao mercado",
-        "status": "not-started"
+        "tarefa": "dormir",
+        "status": "in-progress"
     },
     {
-        "tarefa": "list",
-        "status": "not-started"
-    },
-    {
-        "tarefa": "Nova tarefa",
-        "status": "not-started"
-    },
-    {
-        "tarefa": "Botar o gustavo pra dormir",
-        "status": "not-started"
-    },
-    {
-        "tarefa": " ",
-        "status": "not-started"
-    },
-    {
-        "tarefa": "Bater no deficiente",
-        "status": "not-started"
-    },
-    {
-        "tarefa": "Tarefa conclu\u00edda",
-        "status": "not-started"
-    },
-    {
-        "tarefa": "Alisar os bago",
-        "status": "not-started"
-    },
-    {
-        "tarefa": "Alisar os bago",
+        "tarefa": "Comprar comida para o cachorro",
         "status": "not-started"
     }
 ]
