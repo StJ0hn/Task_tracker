@@ -1,0 +1,22 @@
+[
+    {
+        "tarefa": "Beber",
+        "status": "done"
+    },
+    {
+        "tarefa": "dormir",
+        "status": "in-progress"
+    },
+    {
+        "tarefa": "Comprar comida para o cachorro",
+        "status": "not-started"
+    },
+    {
+        "tarefa": "Fazer a tarefa de casa",
+        "status": "not-started"
+    },
+    {
+        "tarefa": "Fazer a tarefa de casa",
+        "status": "not-started"
+    }
+]
