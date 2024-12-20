@@ -1,2 +1,4 @@
 myvenv/
 .vscode/
+task_tracker.cast
+__pycache__

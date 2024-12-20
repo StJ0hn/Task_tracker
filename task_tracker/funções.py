@@ -4,7 +4,7 @@ from pathlib import Path
 
 app = typer.Typer() 
 
-caminho_do_arquivo = "/home/john/Trabalho/Storm/Projetos Back-end/Rastreador de tarefas/task.json"
+caminho_do_arquivo = "/home/john/Trabalho/Storm/Projetos Back-end/task_tracker/task.json"
 
 #Correção do formato json:
 def corrigir_formato_json():
