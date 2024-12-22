@@ -18,5 +18,13 @@
     {
         "tarefa": "Fazer a tarefa de casa",
         "status": "not-started"
+    },
+    {
+        "tarefa": "correr",
+        "status": "not-started"
+    },
+    {
+        "tarefa": "comprar leite",
+        "status": "not-started"
     }
 ]

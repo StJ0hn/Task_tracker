@@ -15,6 +15,7 @@ def abertura_do_json():
             print("Erro: o arquivo JSON está corrompido. Criando um novo arquivo.")
     else:
         tarefas = []
+    return tarefas
 
 
 def salvar_json(tarefas):
@@ -22,6 +23,7 @@ def salvar_json(tarefas):
             json.dump(tarefas, doc, indent=4)
 
 #Correção do formato json:
+
 def corrigir_formato_json():
     if Path(caminho_do_arquivo).exists():
         try:
@@ -31,10 +33,10 @@ def corrigir_formato_json():
             print("Erro: arquivo JSON corrompido. Criando um novo arquivo.")
             tarefas = []
     else:
-        print("Arquivo não encontrado. Criando um novo arquivo.")
+        print("Arquivo de tarefas não encontrado. Criando um novo arquivo.")
         tarefas = []
 
-    # Verificar e corrigir formato das tarefas
+    # Verificar se as tarefas estão no formato antigo (strings simples)
     tarefas_corrigidas = []
     for tarefa in tarefas:
         if isinstance(tarefa, str):
@@ -46,46 +48,33 @@ def corrigir_formato_json():
         else:
             print(f"Tarefa inválida encontrada no JSON: {tarefa}")
 
-    # Salvar tarefas corrigidas se houver mudanças
-    if tarefas_corrigidas != tarefas:
-        salvar_json(tarefas_corrigidas)
-
-    return tarefas_corrigidas
+    # Salvar o JSON corrigido
+    with open(caminho_do_arquivo, "w") as doc:
+        json.dump(tarefas_corrigidas, doc, indent=4)
 
 
 
-#FUNÇÃO PARA ADICIONAR TAREFAS:
+    #FUNÇÃO PARA ADICIONAR TAREFAS:
 def adicionar(tarefa: str):
     corrigir_formato_json()  # Corrige o formato antes de adicionar a tarefa
-
-    if Path(caminho_do_arquivo).exists():
-        try:
-            with open(caminho_do_arquivo, "r") as doc:
-                tarefas = json.load(doc)
-        except json.JSONDecodeError:
-            print("Erro: o arquivo JSON está corrompido. Criando um novo arquivo.")
-    else:
-        tarefas = []
-
+    tarefas = abertura_do_json()
     # Adicionar a nova tarefa no arquivo JSON
     tarefas.append({"tarefa": tarefa, "status": "not-started"})
-
     # Salvar as tarefas de volta no arquivo JSON
-    with open(caminho_do_arquivo, "w") as doc:
-        json.dump(tarefas, doc, indent=4)
-    print(f"A tarefa '{tarefa}' foi adicionada com sucesso!")
+    salvar_json(tarefas)
+    print(f"Tarefa '{tarefa}' adicionada com sucesso!")
 
-    
-    
+
+
 #Função para listar as tarefas:
 def listar():
 
     if Path(caminho_do_arquivo).exists():
         with open(caminho_do_arquivo, "r") as doc:
             tarefas = json.load(doc)
-            print("Tarefas: ")
-            for i, tarefa in enumerate(tarefas, 1):
-                print(f"{i}. {tarefa['tarefa']} - Status: {tarefa['status']}")
+        print("Tarefas: ")
+        for i, tarefa in enumerate(tarefas, 1):
+            print(f"{i}. {tarefa['tarefa']} - Status: {tarefa['status']}")
     else:
         print("Nenhuma tarefa encontrada")
 
