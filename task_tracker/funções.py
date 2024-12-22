@@ -98,30 +98,19 @@ def remover(tarefa: str):
 #Função para atualizar uma tarefa:
 def atualizar(indice_da_tarefa: int, nova_tarefa: str):
     corrigir_formato_json()  # Corrige o formato antes de atualizar a tarefa
-
-    if Path(caminho_do_arquivo).exists():
-        try:
-            with open(caminho_do_arquivo, "r") as doc:
-                tarefas = json.load(doc)
-        except json.JSONDecodeError:
-            print("Erro: arquivo JSON corrompido. Criando um novo arquivo.")
-    else:
-        tarefas = []
-
+    tarefas = abertura_do_json()
     try:
         tarefa = tarefas[indice_da_tarefa - 1]
         tarefa["tarefa"] = nova_tarefa
-        with open(caminho_do_arquivo, 'w') as doc:
-            json.dump(tarefas, doc, indent=4)
+        salvar_json(tarefas)
         print(f'A tarefa {indice_da_tarefa} foi modificada com sucesso.')
     except IndexError:
         print("Erro: índice da tarefa inválido.")
 
 
-
 #Função pra marcar a tarefa como concluída:
-corrigir_formato_json()
 def marcar_como_concluida(indice_da_tarefa:int, novo_status:str): 
+    corrigir_formato_json()
     #Validar o status inserido
     status_validos = ["done", "in-progress", "not-started"]
     if novo_status not in status_validos:
