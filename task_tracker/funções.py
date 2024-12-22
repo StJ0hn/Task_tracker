@@ -6,6 +6,21 @@ app = typer.Typer()
 
 caminho_do_arquivo = "/home/john/Trabalho/Storm/Projetos Back-end/task_tracker/task.json"
 
+def abertura_do_json():
+    if Path(caminho_do_arquivo).exists():
+        try:
+            with open(caminho_do_arquivo, "r") as doc:
+                tarefas = json.load(doc)
+        except json.JSONDecodeError:
+            print("Erro: o arquivo JSON está corrompido. Criando um novo arquivo.")
+    else:
+        tarefas = []
+
+
+def salvar_json(tarefas):
+    with open(caminho_do_arquivo, "w") as doc:
+            json.dump(tarefas, doc, indent=4)
+
 #Correção do formato json:
 def corrigir_formato_json():
     if Path(caminho_do_arquivo).exists():
@@ -16,10 +31,10 @@ def corrigir_formato_json():
             print("Erro: arquivo JSON corrompido. Criando um novo arquivo.")
             tarefas = []
     else:
-        print("Arquivo de tarefas não encontrado. Criando um novo arquivo.")
+        print("Arquivo não encontrado. Criando um novo arquivo.")
         tarefas = []
 
-    # Verificar se as tarefas estão no formato antigo (strings simples)
+    # Verificar e corrigir formato das tarefas
     tarefas_corrigidas = []
     for tarefa in tarefas:
         if isinstance(tarefa, str):
@@ -31,9 +46,12 @@ def corrigir_formato_json():
         else:
             print(f"Tarefa inválida encontrada no JSON: {tarefa}")
 
-    # Salvar o JSON corrigido
-    with open(caminho_do_arquivo, "w") as doc:
-        json.dump(tarefas_corrigidas, doc, indent=4)
+    # Salvar tarefas corrigidas se houver mudanças
+    if tarefas_corrigidas != tarefas:
+        salvar_json(tarefas_corrigidas)
+
+    return tarefas_corrigidas
+
 
 
 #FUNÇÃO PARA ADICIONAR TAREFAS:
@@ -61,7 +79,6 @@ def adicionar(tarefa: str):
     
 #Função para listar as tarefas:
 def listar():
-    corrigir_formato_json()  # Corrige o formato antes de listar as tarefas
 
     if Path(caminho_do_arquivo).exists():
         with open(caminho_do_arquivo, "r") as doc:
@@ -87,7 +104,11 @@ def remover(tarefa: str):
         tarefas = []
 
     try:
-        tarefas = [t for t in tarefas if t["tarefa"] != tarefa]
+        nova_lista = []
+        for uma_tarefa in tarefas:
+            if uma_tarefa['tarefa'] != tarefa:
+                nova_lista.append(uma_tarefa) 
+
         with open(caminho_do_arquivo, "w") as doc:
             json.dump(tarefas, doc, indent=4)
         print(f"A tarefa '{tarefa}' foi removida com sucesso!")
