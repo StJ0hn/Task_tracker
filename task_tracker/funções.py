@@ -143,10 +143,10 @@ def listar_por_status(status:str, mensagem:str):
     for tarefa in tarefas:
         if tarefa['status'] == status:
             lista_de_tarefas_filtradas.append(tarefa['tarefa'])
-        if len(lista_de_tarefas_filtradas) > 0:
-            print(mensagem)
-            for tarefa in lista_de_tarefas_filtradas:
-                print(tarefa)
-        else:
-            print(f"Nenhuma tarefa com o status '{status}' encontrada.")
+    if len(lista_de_tarefas_filtradas) > 0:
+        print(mensagem)
+        for tarefa in lista_de_tarefas_filtradas:
+            print(tarefa)
+    else:
+        print(f"Nenhuma tarefa com o status '{status}' encontrada.")
         salvar_json(tarefas)
