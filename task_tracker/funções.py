@@ -117,14 +117,7 @@ def marcar_como_concluida(indice_da_tarefa:int, novo_status:str):
         print("Erro. status inválido.")
         return
     #Parte que verifica se o caminho do arquivo é válido:
-    if Path(caminho_do_arquivo).exists():
-        try:
-            with open(caminho_do_arquivo, "r") as doc:
-                tarefas = json.load(doc)
-        except json.JSONDecodeError:
-            print("Erro: arquivo JSON corrompido. Criando novo arquivo.")
-    else:
-        tarefas = []
+    tarefas = abertura_do_json()
     
     #Atualizar o status da tarefa:
     try:
@@ -136,74 +129,24 @@ def marcar_como_concluida(indice_da_tarefa:int, novo_status:str):
             return
         
         #Salvar de volta no arquivo:
-        with open(caminho_do_arquivo, "w") as doc:
-            json.dump(tarefas, doc, indent=4)
+        salvar_json(tarefas)
         print(f"Tarefa '{tarefa['tarefa']}' atualizada para status '{novo_status}'.")
     except IndexError:
         print("Erro: índice da tarefa inválido.")
 
-#Função para mostrar uma lista com as tarefas completas
 
-def mostrar_tasks_concluidas():
-    lista_das_tarefas_completas = []
-    if Path(caminho_do_arquivo).exists():
-        try:
-            with open(caminho_do_arquivo, "r") as doc:
-                tarefas = json.load(doc)
-        except json.JSONDecodeError:
-            print("Erro: arquivo JSON corrompido. Criando novo arquivo.")
-    else:
-        tarefas = []
-#Checar quais tarefas estão marcadas como completas.
-    for tarefa in tarefas:
-        if tarefa['status'] == 'done':
-            print("Tasks completeds: ")
-            lista_das_tarefas_completas.append(tarefa['tarefa'])
-            for i in lista_das_tarefas_completas:
-                print(i)
-    #salvando documento JSON:
-    with open(caminho_do_arquivo, "w") as doc:
-        json.dump(tarefas, doc, indent=4)
-
-
-#Função para mostrar as tarefas em progresso
-def mostrar_tasks_em_progresso():
-    lista_de_tarefas_em_andamento = []
-    if Path(caminho_do_arquivo).exists():
-        try:
-            with open(caminho_do_arquivo, 'r') as doc:
-                tarefas = json.load(doc)
-        except json.JSONDecodeError():
-            print("Erro: arquivo JSON corrompido. Criando novo arquivo.")
-    else:
-        tarefas = []
+#Função para mostrar todos os status das tarefas:
+def listar_por_status(status:str, mensagem:str):
+    tarefas = abertura_do_json()
+    lista_de_tarefas_filtradas =[]
 
     for tarefa in tarefas:
-        if tarefa['status'] == 'in-progress':
-            print('Tasks in-progress:')
-            lista_de_tarefas_em_andamento.append(tarefa['tarefa'])
-            for i in lista_de_tarefas_em_andamento:
-                print(i)
-    with open(caminho_do_arquivo, "w") as doc:
-        json.dump(tarefas, doc, indent=4)
-
-#Função para mostrar as tarefas não iniciadas:
-def mostrar_tasks_nao_iniciadas():
-    lista_de_tarefas_nao_iniciadas = []
-    if Path(caminho_do_arquivo).exists():
-        try:
-            with open(caminho_do_arquivo, 'r') as doc:
-                tarefas = json.load(doc)
-        except json.JSONDecodeError():
-            print("Erro: arquivo JSON corrompido. Criando novo arquivo.")
-    else:
-        tarefas = []
-
-    for tarefa in tarefas:
-        if tarefa['status'] == 'not-started':
-            print('Tasks in-progress:')
-            lista_de_tarefas_nao_iniciadas.append(tarefa['tarefa'])
-            for i in lista_de_tarefas_nao_iniciadas:
-                print(i)
-    with open(caminho_do_arquivo, "w") as doc:
-        json.dump(tarefas, doc, indent=4)
+        if tarefa['status'] == status:
+            lista_de_tarefas_filtradas.append(tarefa['tarefa'])
+        if len(lista_de_tarefas_filtradas) > 0:
+            print(mensagem)
+            for tarefa in lista_de_tarefas_filtradas:
+                print(tarefa)
+        else:
+            print(f"Nenhuma tarefa com o status '{status}' encontrada.")
+        salvar_json(tarefas)

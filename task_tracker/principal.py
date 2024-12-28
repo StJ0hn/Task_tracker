@@ -27,15 +27,15 @@ def mark(indice_da_tarefa:int, status:str):
 
 @app.command()
 def completeds():
-    mostrar_tasks_concluidas()
+    listar_por_status(status='done', mensagem='Tasks Completeds: ')
 
 @app.command()
 def progress():
-    mostrar_tasks_em_progresso()
+    listar_por_status(status='in-progress', mensagem='Tasks in-progress: ')
 
 @app.command()
 def nostarted():
-    mostrar_tasks_nao_iniciadas()
+    listar_por_status(status='not-started', mensagem='Tasks not-started:')
 
 if __name__ == '__main__':
     app()

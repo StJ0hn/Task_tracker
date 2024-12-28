@@ -1,6 +1,10 @@
 [
     {
         "tarefa": "Comer",
-        "status": "not-started"
+        "status": "in-progress"
+    },
+    {
+        "tarefa": "mandar minhas irm\u00e3s passar rex ona",
+        "status": "done"
     }
 ]
